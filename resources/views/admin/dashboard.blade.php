@@ -15,17 +15,17 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
-<div class="content">
-    @include('admin/header')
-        <div class="wrapper d-flex">
-            @include('admin/sidebar')
-              <!-- content of a specific page -->
-                    @if(Route::get('admin/student'))
-                        @include('admin/student');
-                    @endif
-        
-        </div>
+<div id="app">
+    <div class="content">
+        @include('admin/header')
+            <div class="wrapper d-flex">
+                @include('admin/sidebar')
+                <!-- content of a specific page -->    
+                        @if(Route::get('admin/student'))
+                            @include('admin/student');
+                        @endif
+            </div>
+    </div>
 </div>
 </body>
 <html>

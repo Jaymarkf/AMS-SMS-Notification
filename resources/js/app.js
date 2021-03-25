@@ -1,13 +1,15 @@
 require('./bootstrap');
 
+
 import Vue from 'vue';
-import student from './components/Students.vue';
+import Idnumber from './components/Students.vue';
 
-const appf = new Vue({
+const app = new Vue({
 el: '#app',
-components: {student},
+components: {
+    Idnumber
+}
 });
-
 
 //jquery
 $(document).ready(function(){
@@ -27,5 +29,7 @@ $(document).ready(function(){
        }
     }); 
 
-    
 });
+
+//axios
+

@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Student;
 class AdminController extends Controller
 {
     //
@@ -32,5 +32,14 @@ class AdminController extends Controller
     // $users = User::paginate(1);
      return view('admin/dashboard');
     }
-    
+    function api_student($data){
+        $count = Student::where('id_number','=',$data)->count();
+        if($count == 0){
+            return "not found";
+        }else{
+            return "found";
+        }
+      
+    }
+
 }

@@ -1,8 +1,8 @@
 <div class="main-content" style="width:calc(100% - 230px);margin-left:230px;min-height:calc(100% - 42.712px);max-height:100%;">
                 <div class="container-fluid p-4">
-                <!-- content of a url -->
-                    <div  id="app" class="p-5 overflow-auto card" style="box-shadow:5px 7px 8px 3px #000000a6;">
-                        <student></student>           
+                    <!-- content of a url -->
+                    <div class="p-5 overflow-auto card" style="box-shadow:5px 7px 8px 3px #000000a6;">
+                          
                         <!-- render to view -->
                         <div class="row">
                             <div class="text-center">
@@ -33,12 +33,7 @@
                                         </div>
                                         <!-- MODAL BODY -->
                                         <div class="modal-body">
-                                        
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">ID Number</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="ID Number" autocomplete="off" required>
-                                                <small id="emailHelp" class="form-text text-muted">If you are unsure please tap your RFID Card in this field</small>
-                                            </div>
+                                           <Idnumber></Idnumber>
                                             <div class="form-group">
                                                 <label for="mFname">First name</label>
                                                 <input type="text" class="form-control" id="mFname" placeholder="First name" required>
@@ -147,5 +142,5 @@
                         @endif
                     </div>
                 </div>
-            </div>
+</div>
 
