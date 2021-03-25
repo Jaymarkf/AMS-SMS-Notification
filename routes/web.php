@@ -25,7 +25,4 @@ Route::view('admin/dashboard','admin.dashboard')->middleware('checkuser');
 
 Route::get('admin/student',[AdminController::class,'show'])->middleware('checkuser');
 
-Route::get('/x',function(){
-echo Auth::user();
-});
 
