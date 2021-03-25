@@ -28,9 +28,9 @@ class AdminController extends Controller
     }
 
    
-    function testp(){
-        $users =  User::paginate(2);
-        // return response()->json(['data'=>$test]);
-        return view('test',compact('users'));
+    function show(){
+    // $users = User::paginate(1);
+     return view('admin/dashboard');
     }
+    
 }
