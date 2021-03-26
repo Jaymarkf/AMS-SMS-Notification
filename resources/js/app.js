@@ -2,12 +2,13 @@ require('./bootstrap');
 
 
 import Vue from 'vue';
-import Idnumber from './components/Students.vue';
+import Idnumber from './components/admin/Students.vue';
+import settings from './components/admin/Settings.vue';
 
 const app = new Vue({
 el: '#app',
 components: {
-    Idnumber
+    Idnumber,settings,
 }
 });
 

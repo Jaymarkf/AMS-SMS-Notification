@@ -28,10 +28,18 @@ class AdminController extends Controller
     }
 
    
-    function show(){
+    function student(){
     // $users = User::paginate(1);
      return view('admin/dashboard');
     }
+     
+    function settings(){
+        // $users = User::paginate(1);
+     return view('admin/dashboard');
+    }
+
+
+
     function api_student($data){
         $count = Student::where('id_number','=',$data)->count();
         if($count == 0){

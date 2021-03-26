@@ -3,7 +3,7 @@
     <label for="exampleInputEmail1">ID Number</label>
     <input v-model="id_number"  type="text" v-bind:class="formcontrol" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="ID Number" autocomplete="off" required v-on:blur="checkifavailable" >
     <small id="emailHelp" class="form-text text-muted">If you are unsure please tap your RFID Card in this field</small>
-    <div v-bind:class="feedback">{{feedback_message}}</div>
+    <div v-bind:class="feedback" id="feedbackmessage">{{feedback_message}}</div>
  </div>
 </template>
 <script>
@@ -34,15 +34,17 @@ data(){
               this.formcontrol = "form-control is-invalid";
               this.feedback="invalid-feedback";
               this.feedback_message="ID number was already taken please choose another card!";
+              $('#create').attr('disabled','disabled');
           }else{
               //not found
+               $('#create').prop("disabled", false);
              this.formcontrol = "form-control is-valid";
              this.feedback="valid-feedback";
              this.feedback_message="ID number is available";
             
           }
       });
-    
+        
       }
       
     }

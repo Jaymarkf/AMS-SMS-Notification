@@ -1,8 +1,4 @@
-<div class="main-content" style="width:calc(100% - 230px);margin-left:230px;min-height:calc(100% - 42.712px);max-height:100%;">
-                <div class="container-fluid p-4">
-                    <!-- content of a url -->
-                    <div class="p-5 overflow-auto card" style="box-shadow:5px 7px 8px 3px #000000a6;">
-                          
+
                         <!-- render to view -->
                         <div class="row">
                             <div class="text-center">
@@ -58,7 +54,7 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            <!-- <div class="form-group">
                                                 <label for="YearLevel">Year level</label>
                                                 <select class="custom-select" id="Yearlevel" required>
                                                     <option selected value="">Open this select menu</option>
@@ -75,7 +71,7 @@
                                                     <option value="2">Two</option>
                                                     <option value="3">Three</option>
                                                     </select>
-                                             </div>
+                                             </div> -->
                                              <div class="form-group">
                                                 <label for="photo">Photo</label>
                                                 <div class="custom-file" id="photo">
@@ -88,7 +84,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-success">Save changes</button>
+                                            <button type="submit" class="btn btn-success" id="create">Create</button>
                                         </div>
                                         </div>
                                     </div>
@@ -140,7 +136,4 @@
                         @if(isset($users))
                         {{$users->links()}}
                         @endif
-                    </div>
-                </div>
-</div>
 

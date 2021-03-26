@@ -23,6 +23,7 @@ Route::post('loginuser',[AdminController::class,'auth'])
 
 Route::view('admin/dashboard','admin.dashboard')->middleware('checkuser');
 
-Route::get('admin/student',[AdminController::class,'show'])->middleware('checkuser');
+Route::get('admin/student',[AdminController::class,'student'])->middleware('checkuser');
+Route::get('admin/settings',[AdminController::class,'settings'])->middleware('checkuser');
 
 
