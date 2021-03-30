@@ -4,6 +4,9 @@
     <input v-model="id_number"  type="text" v-bind:class="formcontrol" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="ID Number" autocomplete="off" required v-on:blur="checkifavailable" >
     <small id="emailHelp" class="form-text text-muted">If you are unsure please tap your RFID Card in this field</small>
     <div v-bind:class="feedback" id="feedbackmessage">{{feedback_message}}</div>
+        <span v-show="scheck" class="spinner-border spinner-border-sm text-success" id="spinner" role="status">
+    
+        </span>
  </div>
 </template>
 <script>
@@ -18,15 +21,18 @@ data(){
        feedback: '',
        feedback_message: '',
        ab: '',
+       scheck: false,
         
     }
 },methods:{ 
    checkifavailable(){
+        this.formcontrol = 'form-control';
       if(this.id_number == ''){
           this.formcontrol = 'form-control is-invalid';
           this.feedback = 'invalid-feedback';
           this.feedback_message = 'Do not leave this field!';
       }else{
+          this.scheck = true;
          //proceed to check if id number is available using get http  request to API
       axios.get('/api/asd/' + this.id_number)
       .then((response) => {
@@ -35,12 +41,14 @@ data(){
               this.feedback="invalid-feedback";
               this.feedback_message="ID number was already taken please choose another card!";
               $('#create').attr('disabled','disabled');
+                  this.scheck = false;
           }else{
               //not found
                $('#create').prop("disabled", false);
              this.formcontrol = "form-control is-valid";
              this.feedback="valid-feedback";
              this.feedback_message="ID number is available";
+                this.scheck = false;
             
           }
       });

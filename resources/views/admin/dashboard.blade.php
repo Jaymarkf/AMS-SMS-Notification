@@ -9,7 +9,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="icon" href="#" type="image/x-icon"/>
     <title>Vroom</title>
-    @include('admin/navstyle')
+    @include('admin/css/navstyle')
+    @include('admin/css/misc')
 </head>
 <body>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -21,19 +22,12 @@
             <div class="wrapper d-flex">
                 @include('admin/sidebar')
                 <!-- content of a specific page -->  
-                <div class="main-content" style="width:calc(100% - 230px);margin-left:230px;min-height:calc(100% - 42.712px);max-height:100%;">
-                <div class="container-fluid p-4">
-                    <!-- content of a url -->
-                    <div class="p-5 overflow-auto card" style="box-shadow:5px 7px 8px 3px #000000a6;">
-                        @if(Request::is('admin/student'))
-                            @include('admin/student')
-                        @elseif(Request::is('admin/settings'))
-                           <settings></settings>
-                        @endif 
-                    </div>
-                </div>
- 
-            </div>
+                            @if(Request::is('admin/student'))
+                                @include('admin/student')
+                            @elseif(Request::is('admin/settings'))
+                                <!-- year_data to show select option all data in settings -->
+                                <settingsyear :year_data="{{ $year_level }}"></settingsyear>
+                            @endif 
     </div>
 </div>
 </body>

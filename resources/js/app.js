@@ -3,13 +3,15 @@ require('./bootstrap');
 
 import Vue from 'vue';
 import Idnumber from './components/admin/Students.vue';
-import settings from './components/admin/Settings.vue';
+import settingsyear from './components/admin/Settings.vue';
+// window.Vue = require('vue');
+// Vue.component('Idnumber',require('./components/admin/Students.vue'));
+// Vue.component('settingsyear',require('./components/admin/Settings.vue'));
+// Vue.component('pagination',require('laravel-vue-pagination'));
 
 const app = new Vue({
 el: '#app',
-components: {
-    Idnumber,settings,
-}
+components: {Idnumber,settingsyear}
 });
 
 //jquery
