@@ -4,6 +4,7 @@ require('./bootstrap');
 import Vue from 'vue';
 import Idnumber from './components/admin/Students.vue';
 import settingsyear from './components/admin/Settings.vue';
+import modals from './components/admin/Modals.vue';
 // window.Vue = require('vue');
 // Vue.component('Idnumber',require('./components/admin/Students.vue'));
 // Vue.component('settingsyear',require('./components/admin/Settings.vue'));
@@ -11,7 +12,7 @@ import settingsyear from './components/admin/Settings.vue';
 
 const app = new Vue({
 el: '#app',
-components: {Idnumber,settingsyear}
+components: {Idnumber,settingsyear,modals}
 });
 
 //jquery

@@ -31,5 +31,6 @@ Route::post('/create_course',[AdminController::class,'create_course'])->middlewa
 Route::get('/paginate_year',[AdminController::class,'yearpaginate'])->middleware('checkuser');
 //getcourse
 Route::get('/get_course',[AdminController::class,'get_course'])->middleware('checkuser');
+Route::post('/change_year',[AdminController::class,'edit_year'])->middleware('checkuser');
 
 

@@ -1,7 +1,7 @@
 <template>
  <div class="form-group">
     <label for="exampleInputEmail1">ID Number</label>
-    <input v-model="id_number"  type="text" v-bind:class="formcontrol" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="ID Number" autocomplete="off" required v-on:blur="checkifavailable" >
+    <input v-model="id_number" name="rfid_number" type="text" v-bind:class="formcontrol" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="ID Number" autocomplete="off" required v-on:blur="checkifavailable" >
     <small id="emailHelp" class="form-text text-muted">If you are unsure please tap your RFID Card in this field</small>
     <div v-bind:class="feedback" id="feedbackmessage">{{feedback_message}}</div>
         <span v-show="scheck" class="spinner-border spinner-border-sm text-success" id="spinner" role="status">

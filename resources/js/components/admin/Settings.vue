@@ -2,7 +2,7 @@
 
     <div class="main-content" style="width:calc(100% - 230px);margin-left:230px;min-height:calc(100% - 42.712px);max-height:100%;">
         <div class="container-fluid p-4">
-                        <!-- content of a url -->
+                   <!-- content of a url -->
             <div class="p-5 overflow-auto card" style="box-shadow:5px 7px 8px 3px #000000a6;">
                 <span class="display-4">Settings</span>
                 <div class="row border-bottom mb-2"></div>
@@ -47,24 +47,34 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col text-center">
-                                <table class="table table-stripped table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Year Name</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="data in yeardata.data" :key="data.id">
-                                            <td><input type="text" class="border-inactive" v-bind:value="data.name" disabled/> </td>
-                                            <td>
-                                                <button type="button" title="edit" class="btn btn-primary"><i class="fa fa-edit fa-lg"></i>&nbsp;</button>
-                                                <button type="button" title="delete" class="btn btn-danger"><i class="fa fa-trash fa-lg"></i>&nbsp;</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>        
-                                </table>
+                            <div class="col text-center">     
+                                <transition name="bounce">
+                                    <div v-bind:class="errClass">{{errMsg}}</div>       
+                                </transition>
+                                <form @submit.prevent="save_change_year">          
+                                    <table class="table table-stripped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Year Name</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>                                
+                                            <tr v-for="data in yeardata.data" :key="data.id">
+                                                <td>
+
+                                                    <input type="text" v-bind:class="{borderactiveblue:activeborder === data.id }" v-model="data.name"  style="padding:5px;border:none;" :disabled="activeborder === data.id ? false:true" required/> 
+                                                    <button type="submit" v-if="activeborder == data.id" @click="savechange(data.id)" v-bind:id="test = data.name" class="btn btn-success btn-sm"> <i v-bind:class="submitted"></i>&nbsp;save&nbsp;</button> <button class="btn btn-secondary btn-sm text-light" v-if="activeborder == data.id" @click="cancel"><i class="fa fa-close text-white"></i> &nbsp;cancel</button>    
+                                                </td>
+                                                <td>
+                                                    <button title="edit" type="button" class="btn btn-primary" @click="(activeborder = data.id); refresh()"><i class="fa fa-edit fa-lg"></i>&nbsp;</button>
+                                                    <button type="button" title="delete" class="btn btn-danger" @click="delete_year(data.id)"><i class="fa fa-trash fa-lg"></i>&nbsp;</button>
+                                                </td>
+                                            </tr>
+                                        
+                                        </tbody>        
+                                    </table>
+                                </form>
                             </div>
                         </div>
                         <div class="row">
@@ -109,13 +119,17 @@
                 </div>
             </div>
         </div>
+        <modals>
+            
+        </modals>
     </div>
-
 </template>
 <script>
 import pagination from 'laravel-vue-pagination';
+import modals from './Modals.vue';
+
 export default{
-    components:{pagination},
+    components:{pagination,modals},
     props:['year_data'],
     data(){
     return {
@@ -127,15 +141,66 @@ export default{
         course: '',
         yeardata: {},
         coursedata:{},
-
-
+        activeborder:'',
+        trigger: false,
+        test: '',
+        e_year_id: '',
+        errClass: '',
+        errMsg: '',
+        submitted: 'fa fa-save',
     }
 },created() {
             this.getResults();
             this.getCourse();
-
 },
 methods:{
+    delete_year(e){
+         
+    },
+    save_change_year(){
+        this.sumitted = 'spinner-border text-dark spinner-border-sm';
+        let year_name  = this.test;
+        let year_id = this.e_year_id;
+        axios.post('/change_year',{year_id:year_id,year_name:year_name}).then(res =>{
+            if(res.data == "success"){
+                //success
+                this.errMsg = "Year level is successfully edited!";
+                this.errClass = "alert alert-success text-muted font-weight-bold";
+                setTimeout(()=>{ this.activeborder = ''; this.errMsg = ''; this.errClass = '';  this.submitted = 'fa fa-save';},2000);
+                setTimeout(()=>{ window.location.reload()},1000);
+
+               
+                
+            }else{
+                //exist
+                this.errClass = "alert alert-danger text-muted font-weight-bold";
+                this.errMsg = "Year level is already exist!";
+                setTimeout(()=>{ this.activeborder = ''; this.errMsg = ''; this.errClass = ''; this.submitted = 'fa fa-save';},2000);
+                setTimeout(()=>{ window.location.reload()},1000);
+                
+            }
+        });
+
+        
+
+    },
+    refresh(){
+        axios.get('/paginate_year?page=' + 1)
+        .then((response) => {
+            this.yeardata = response.data;
+        });
+    },
+    cancel(){
+        this.activeborder='';
+         axios.get('/paginate_year?page=' + 1)
+        .then((response) => {
+            this.yeardata = response.data;
+        });
+   
+    },
+    savechange(v){
+        this.e_year_id = v;
+    },  
     getResults(page = 1) {
         axios.get('/paginate_year?page=' + page)
         .then((response) => {
@@ -145,7 +210,6 @@ methods:{
      getCourse(pageview = 1){
          axios.get('/get_course?page=' + pageview).then((r)=>{
              this.coursedata = r.data;
-             console.log(r.data);
          });
      },
      isLetter(e) {

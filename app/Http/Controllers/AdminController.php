@@ -91,5 +91,19 @@ class AdminController extends Controller
        return YearLevel::join('courses','year_levels.id','=','courses.year_level_id')->select('year_levels.*','courses.*','year_levels.name as yearname')->paginate(5);
     }
 
+    function edit_year(Request $request){
+       $num = YearLevel::where('name','=',$request->year_name)->count();
+       if($num == 0){
+            //save
+            YearLevel::where('id','=',$request->year_id)->update(['name' => $request->year_name]);
+            return "success";
+
+       }else{
+           //year exist
+           return "exist";
+
+       }
+    }
+
   
 }

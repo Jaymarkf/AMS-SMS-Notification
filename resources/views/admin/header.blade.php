@@ -1,4 +1,4 @@
-<div class="nav-container d-flex">
+<div class="nav-container d-flex" style="position:sticky">
         <div class="p-2" id="p-minimizer">
             <span class="fa fa-toggle-on fa-lg text-white" style="font-size:30px;cursor:pointer" id="minimizer"></span>
         </div>

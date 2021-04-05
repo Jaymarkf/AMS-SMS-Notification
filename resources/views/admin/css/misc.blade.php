@@ -29,7 +29,11 @@
 }
 
 .border-active{
-  border: 1px solid #dee2e6;
+  border: 1px solid  #dee2e6;
   border-radius: 10px;
+}
+
+.borderactiveblue{
+  border: 1px solid #4baae2 !important;
 }
 </style>
