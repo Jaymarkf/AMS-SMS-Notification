@@ -8,6 +8,7 @@
                 <div class="row border-bottom mb-2"></div>
                 <div class="card bg-light mb-3 shadow-lg bg-white" style="width: 600px;">
                     <div class="card-header text-muted font-weight-bolder">Manage Year Level | Course/Strand Connection</div>
+                    
                     <div class="card-body overflow-auto">
                         <!-- <div class="alert alert-success">Year was added</div> -->
                         <!-- Year Level row -->
@@ -84,11 +85,14 @@
                         </div>
                          <div class="row py-2">
                             <div class="col text-center border-bottom py-1">
+                                <div v-bind:class="course_class">{{course_response}}</div>
                                 <div class="text-muted font-weight-bold">Course/Strand Data</div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col text-center">
+                                <form @submit.prevent="save_change_course_form">
+                                
                                 <table class="table table-stripped table-bordered table-hover">
                                     <thead>
                                         <tr>
@@ -100,14 +104,22 @@
                                     <tbody>
                                         <tr v-for="course in coursedata.data" :key="course.id">
                                             <td>{{ course.yearname }}</td>
-                                            <td>{{ course.name }}</td>
                                             <td>
-                                                <button type="button" title="edit" class="btn btn-primary"><i class="fa fa-edit fa-lg"></i>&nbsp;</button>
-                                                <button type="button" title="delete" class="btn btn-danger"><i class="fa fa-trash fa-lg"></i>&nbsp;</button>
+                                                    <input type="text" v-bind:class="{borderactiveblue:activeborder_2 === course.id }" v-model="course.name"  style="padding:5px;border:none;" :disabled="activeborder_2 === course.id ? false:true" required/> 
+                                                    <div class="row"> 
+                                                        <div class="col pt-2">
+                                                            <button type="submit" v-if="activeborder_2 == course.id" @click="save_change_course(course.id)" v-bind:id="test_course = course.name" class="btn btn-success btn-sm mr-3"> <i v-bind:class="submitted"></i>&nbsp;save&nbsp;</button> <button class="btn btn-secondary btn-sm text-light" v-if="activeborder_2 == course.id" @click="cancel_course"><i class="fa fa-close text-white"></i> &nbsp;cancel</button>    
+                                                        </div>
+                                                    </div>
+                                            </td>
+                                            <td>
+                                                <button type="button" title="edit" @click="(activeborder_2 = course.id);"  class="btn btn-primary"><i class="fa fa-edit fa-lg"></i>&nbsp;</button>
+                                                <button type="button" title="delete" @click="delete_course(course.id)" class="btn btn-danger"><i class="fa fa-trash fa-lg"></i>&nbsp;</button>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                </form>
                             </div>
                         </div>
                         <div class="row">
@@ -119,9 +131,7 @@
                 </div>
             </div>
         </div>
-        <modals>
-            
-        </modals>
+    
     </div>
 </template>
 <script>
@@ -142,20 +152,52 @@ export default{
         yeardata: {},
         coursedata:{},
         activeborder:'',
+        activeborder_2:'',
         trigger: false,
         test: '',
+        test_course: '',
         e_year_id: '',
         errClass: '',
         errMsg: '',
         submitted: 'fa fa-save',
+        e_course_id: '',
+        course_class:'',
+        course_response:'',
+
     }
 },created() {
             this.getResults();
             this.getCourse();
+        
 },
 methods:{
+
     delete_year(e){
-         
+         if(confirm("are you sure you want to delete?")){
+            axios.get('/check_year_course_connection/'+e).then(res=>{
+                
+                    if(res.data == "success"){
+                                this.errMsg = "Year level is successfully deleted!";
+                                this.errClass = "alert alert-success text-muted font-weight-bold";
+                                setTimeout(()=>{ this.activeborder = ''; this.errMsg = ''; this.errClass = '';  this.submitted = 'fa fa-save';},2000);
+                                setTimeout(()=>{ window.location.reload()},2000);
+                        }else if(res.data == "cant-delete"){
+                                this.errClass = "alert alert-danger text-muted font-weight-bold";
+                                this.errMsg = "Year level has course data. Cant delete";
+                                setTimeout(()=>{ this.activeborder = ''; this.errMsg = ''; this.errClass = '';  this.submitted = 'fa fa-save';},2000);
+                                setTimeout(()=>{ window.location.reload()},3000);
+                        }
+            });
+        }
+    },
+    delete_course(e){
+        if(confirm("are you sure you want to delete this?")){
+            axios.get('/delete_course/'+e).then(res =>{
+                this.course_class = "alert alert-warning";
+                this.course_response = "Course was successfully deleted";
+                setTimeout(()=>{ window.location.reload()},1000);  
+            });
+        }
     },
     save_change_year(){
         this.sumitted = 'spinner-border text-dark spinner-border-sm';
@@ -167,10 +209,7 @@ methods:{
                 this.errMsg = "Year level is successfully edited!";
                 this.errClass = "alert alert-success text-muted font-weight-bold";
                 setTimeout(()=>{ this.activeborder = ''; this.errMsg = ''; this.errClass = '';  this.submitted = 'fa fa-save';},2000);
-                setTimeout(()=>{ window.location.reload()},1000);
-
-               
-                
+                setTimeout(()=>{ window.location.reload()},1000);            
             }else{
                 //exist
                 this.errClass = "alert alert-danger text-muted font-weight-bold";
@@ -179,32 +218,57 @@ methods:{
                 setTimeout(()=>{ window.location.reload()},1000);
                 
             }
+        });       
+    },
+    save_change_course_form(){
+        let c_name = this.test_course;
+        let c_id = this.e_course_id;
+        axios.post('/change_course',{c_name:c_name,c_id:c_id}).then(res=>{
+            if(res.data == "success"){
+                this.course_class = "alert alert-success";
+                this.course_response = "Course was successfully edited!";
+                setTimeout(()=>{ window.location.reload()},1000);   
+            }else{
+                //exist
+                this.course_class = "alert alert-danger";
+                this.course_response = "Course is already exist!";
+                setTimeout(()=>{ window.location.reload()},1000);  
+            }
         });
-
-        
-
     },
     refresh(){
         axios.get('/paginate_year?page=' + 1)
         .then((response) => {
             this.yeardata = response.data;
+
         });
     },
     cancel(){
         this.activeborder='';
+        
          axios.get('/paginate_year?page=' + 1)
         .then((response) => {
             this.yeardata = response.data;
         });
    
     },
+    cancel_course(){
+        this.activeborder_2='';
+        axios.get('/get_course?page=' + 1).then((r)=>{
+             this.coursedata = r.data;
+         });
+    },
     savechange(v){
         this.e_year_id = v;
     },  
+    save_change_course(v){
+        this.e_course_id = v;
+    },
     getResults(page = 1) {
         axios.get('/paginate_year?page=' + page)
         .then((response) => {
-            this.yeardata = response.data;
+        this.yeardata = response.data;
+
         });
      },
      getCourse(pageview = 1){

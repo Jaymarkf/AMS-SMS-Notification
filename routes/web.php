@@ -32,5 +32,9 @@ Route::get('/paginate_year',[AdminController::class,'yearpaginate'])->middleware
 //getcourse
 Route::get('/get_course',[AdminController::class,'get_course'])->middleware('checkuser');
 Route::post('/change_year',[AdminController::class,'edit_year'])->middleware('checkuser');
+Route::post('/change_course',[AdminController::class,'edit_course'])->middleware('checkuser');
+Route::get('/delete_course/{id}',[AdminController::class,'delete_course'])->middleware('checkuser');
+
+Route::get('/check_year_course_connection/{id}',[AdminController::class,'check_connection_year_course'])->middleware('checkuser');
 
 

@@ -97,12 +97,34 @@ class AdminController extends Controller
             //save
             YearLevel::where('id','=',$request->year_id)->update(['name' => $request->year_name]);
             return "success";
-
        }else{
            //year exist
            return "exist";
-
        }
+    }
+    function edit_course(Request $request){
+        $num = Course::where('name','=',$request->c_name)->count();
+        if($num == 0 ){
+            //save
+            Course::where('id','=',$request->c_id)->update(['name' => $request->c_name]);
+            return "success";
+        }else{
+            //course exist
+            return "exist";
+        }
+    }
+
+    function check_connection_year_course($id){
+        $count = Course::where('year_level_id','=',$id)->count();
+        if($count > 0 ){
+            return "cant-delete";
+        }else{
+            YearLevel::where('id','=',$id)->delete();
+            return "success";
+        }
+    }
+    function delete_course($id){
+        Course::where('id','=',$id)->delete();
     }
 
   
