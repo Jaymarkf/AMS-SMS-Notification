@@ -5,6 +5,7 @@ import Vue from 'vue';
 import Idnumber from './components/admin/Students.vue';
 import settingsyear from './components/admin/Settings.vue';
 import modals from './components/admin/Modals.vue';
+import yearcourse from './components/admin/StudentYearCourse.vue';
 // window.Vue = require('vue');
 // Vue.component('Idnumber',require('./components/admin/Students.vue'));
 // Vue.component('settingsyear',require('./components/admin/Settings.vue'));
@@ -12,7 +13,7 @@ import modals from './components/admin/Modals.vue';
 
 const app = new Vue({
 el: '#app',
-components: {Idnumber,settingsyear,modals}
+components: {Idnumber,settingsyear,modals,yearcourse}
 });
 
 //jquery

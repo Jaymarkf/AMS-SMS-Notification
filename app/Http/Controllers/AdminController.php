@@ -35,7 +35,8 @@ class AdminController extends Controller
    
     function student(){
     // $users = User::paginate(1);
-     return view('admin/dashboard');
+     $year = YearLevel::all();
+     return view('admin/dashboard',compact('year'));
     }
      
     function settings(){
@@ -125,6 +126,33 @@ class AdminController extends Controller
     }
     function delete_course($id){
         Course::where('id','=',$id)->delete();
+    }
+    function get_course_key($id){
+      $c = Course::where('year_level_id','=',$id)->count();
+     if($c != 0 ){
+         $data = Course::where('year_level_id','=',$id)->get();
+         return response()->json($data);
+     }
+    }
+     function save_student(Request $r){
+        $r->validate([
+            'photo'=> 'required|image|mimes:jpeg,png,jpg,gif,svg,bmp|max:2048'
+        ]);
+        $photo = $r->file('photo')->getClientOriginalName();
+        $student = new Student;
+        $url_photo = time().$photo; 
+        $student->id_number = $r->rfid_number;
+        $student->first_name = $r->first_name;
+        $student->middle_name = $r->middle_name;
+        $student->last_name = $r->last_name;
+        $student->parents_contact_number = $r->contact;
+        $student->gender = $r->gender;
+        $student->year_level = $r->year;
+        $student->course_strand = $r->course;
+        $student->photo = $url_photo; 
+        $r->photo->move(public_path('images'),$url_photo);  
+        $student->save();
+        
     }
 
   

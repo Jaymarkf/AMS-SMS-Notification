@@ -12,7 +12,8 @@
                         </div>
                         <hr>
                         <div class="row">
-                            <form>
+                            <form action="{{route('save_new_student')}}" method="post" enctype="multipart/form-data">
+                            @csrf
                                 <div class="p-3">
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
@@ -35,15 +36,19 @@
                                            <Idnumber></Idnumber>
                                             <div class="form-group">
                                                 <label for="mFname">First name</label>
-                                                <input type="text" class="form-control" id="mFname" placeholder="First name" required>
+                                                <input type="text" class="form-control" name="first_name" id="mFname" placeholder="First name" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="mMname">Middle name</label>
-                                                <input type="text" class="form-control" id="mMname" placeholder="Middle name" required>
+                                                <input type="text" class="form-control" name="middle_name" id="mMname" placeholder="Middle name" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="mLname">Last name</label>
-                                                <input type="text" class="form-control" id="mLname" placeholder="Last name" required>
+                                                <input type="text" class="form-control" name="last_name" id="mLname" placeholder="Last name" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="contact">Parents Contact #</label>
+                                                <input type="text" class="form-control" name="contact" id="contact" placeholder="Contact number" required>
                                             </div>
                                             <div class="form-check">
                                                 <label for="gender">Gender</label>
@@ -57,28 +62,12 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                            <!-- <div class="form-group">
-                                                <label for="YearLevel">Year level</label>
-                                                <select class="custom-select" id="Yearlevel" required>
-                                                    <option selected value="">Open this select menu</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                    </select>
-                                             </div>
-                                             <div class="form-group">
-                                                <label for="course-strand">Course / Strand</label>
-                                                <select class="custom-select" id="course-strand" required>
-                                                    <option selected value="">Open this select menu</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                    </select>
-                                             </div> -->
+                                 
+                                             <yearcourse :year="{{$year}}"></yearcourse>
                                              <div class="form-group">
                                                 <label for="photo">Photo</label>
                                                 <div class="custom-file" id="photo">
-                                                    <input type="file" class="custom-file-input" id="customFile" required>
+                                                    <input type="file" class="custom-file-input" name="photo" id="customFile" required>
                                                     <label class="custom-file-label" for="customFile">Choose file</label>
                                                 </div>
                                              </div>
