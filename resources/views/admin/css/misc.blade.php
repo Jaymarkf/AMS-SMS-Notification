@@ -36,4 +36,11 @@
 .borderactiveblue{
   border: 1px solid #4baae2 !important;
 }
+.table td{
+  vertical-align:middle !important;
+  text-align:center;
+}
+.table th{
+  text-align:center;
+}
 </style>

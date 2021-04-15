@@ -38,4 +38,6 @@ Route::get('/delete_course/{id}',[AdminController::class,'delete_course'])->midd
 Route::get('/check_year_course_connection/{id}',[AdminController::class,'check_connection_year_course'])->middleware('checkuser');
 Route::get('/get_course_key/{id}',[AdminController::class,'get_course_key'])->middleware('checkuser');
 Route::post('/save_student',[AdminController::class,'save_student'])->middleware('checkuser')->name('save_new_student');
+Route::get('/edit_student/{id}',[AdminController::class,'edit_student'])->middleware('checkuser');
+Route::post('/save_edit_student',[AdminController::class,'save_edit_student'])->middleware('checkuser');
 

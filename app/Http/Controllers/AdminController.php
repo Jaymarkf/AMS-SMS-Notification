@@ -35,8 +35,24 @@ class AdminController extends Controller
    
     function student(){
     // $users = User::paginate(1);
+    if(isset($_GET['search'])){
+        $qry = $_GET['search'];
+      $year = YearLevel::all();
+     $users = Student::where('students.id_number','like','%'.$qry.'%')
+     ->orWhere('students.first_name','like','%'.$qry.'%')
+     ->orWhere('students.middle_name','like','%'.$qry.'%')
+     ->orWhere('students.last_name','like','%'.$qry.'%')
+     ->orWhere('students.gender','like','%'.$qry.'%')
+     ->orWhere('year_levels.name','like','%'.$qry.'%')
+     ->orWhere('courses.name','like','%'.$qry.'%')
+     ->orWhere('students.parents_contact_number','like','%'.$qry.'%')
+     ->join('year_levels','students.year_level','=','year_levels.id')->join('courses','students.course_strand','=','courses.id')->select('students.*','students.id as student_id','year_levels.name as yearname','courses.name as coursename')->paginate(10);
+     return view('admin/dashboard',compact('year','users'));
+    }else{
      $year = YearLevel::all();
-     return view('admin/dashboard',compact('year'));
+     $users = Student::join('year_levels','students.year_level','=','year_levels.id')->join('courses','students.course_strand','=','courses.id')->select('students.*','students.id as student_id','year_levels.name as yearname','courses.name as coursename')->paginate(10);
+     return view('admin/dashboard',compact('year','users'));
+    }
     }
      
     function settings(){
@@ -152,8 +168,14 @@ class AdminController extends Controller
         $student->photo = $url_photo; 
         $r->photo->move(public_path('images'),$url_photo);  
         $student->save();
+        //redirect to view
         
     }
-
+    function edit_student($id){ 
+            return Student::where('id','=',$id)->first();
+    }
+    function save_edit_student(Request $r){
+        //to be continue tomorrow friday
+    }
   
 }
