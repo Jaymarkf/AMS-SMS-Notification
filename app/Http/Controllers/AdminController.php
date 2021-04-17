@@ -154,7 +154,7 @@ class AdminController extends Controller
         $r->validate([
             'photo'=> 'required|image|mimes:jpeg,png,jpg,gif,svg,bmp|max:2048'
         ]);
-        $photo = $r->file('photo')->getClientOriginalName();
+        $photo = $r->file('photo')->getClientOriginalExtension();
         $student = new Student;
         $url_photo = time().$photo; 
         $student->id_number = $r->rfid_number;
@@ -175,7 +175,21 @@ class AdminController extends Controller
             return Student::where('id','=',$id)->first();
     }
     function save_edit_student(Request $r){
-        //to be continue tomorrow friday
+       
+        if(isset($r->file)){
+            $imageName = time().'.'.$r->file->getClientOriginalExtension();
+            $r->file('file')->move(public_path('images'), $imageName);
+            Student::where('id','=',$r->e_student_id)->update(['photo'=>$imageName]);
+            return 'success-upload';
+        }else{
+            Student::where('id','=',$r->e_student_id)->update(['id_number' => $r->student_id_number]);
+           
+           
+        }
+  
+    }
+    function delete_student(Request $request){
+            Student::where('id','=',$request->delete_id)->delete();
     }
   
 }

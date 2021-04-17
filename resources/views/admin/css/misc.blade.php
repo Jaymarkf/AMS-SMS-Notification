@@ -43,4 +43,28 @@
 .table th{
   text-align:center;
 }
+.alert-success-modal{
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 2s, opacity 5s linear;
+}
+.custom-modal {
+    display:    block;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgb(0 0 0 / 92%)
+                url({{url('/images/ajax-loader.gif')}}) 
+                50% 50% 
+                no-repeat;
+}
+
+.custom-modal-none {
+    overflow: hidden;   
+    display: none !important;
+
+}
 </style>

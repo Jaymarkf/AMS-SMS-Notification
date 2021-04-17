@@ -166,10 +166,10 @@ export default{
 },created() {
             this.getResults();
             this.getCourse();
-        
+         
 },
 methods:{
-
+    
     delete_year(e){
          if(confirm("are you sure you want to delete?")){
             axios.get('/check_year_course_connection/'+e).then(res=>{

@@ -1,6 +1,6 @@
 require('./bootstrap');
 
-
+$('#loading').addClass('custom-modal');
 import Vue from 'vue';
 import Idnumber from './components/admin/Students.vue';
 import settingsyear from './components/admin/Settings.vue';
@@ -18,6 +18,7 @@ components: {Idnumber,settingsyear,modalstudent,yearcourse}
 
 //jquery
 $(function(){
+    setTimeout(()=>{$('#loading').removeClass('custom-modal')},1500);
     $('#p-minimizer').on('click',function(){
        if($('#minimizer').hasClass('fa-toggle-on')){
            $('#minimizer').addClass('fa-toggle-off');
@@ -42,7 +43,7 @@ $(function(){
    $('.btn-edit-student').on('click',function(){
         axios.get('/edit_student/'+$(this).attr('data-id')).then(res=>{
             $('#editStudentModal').modal('toggle');
-            $('#e_student_id').val(res.data.id);
+            $('.e_student_id').val(res.data.id);
             $('#edit-modal-image').attr('src','/images/'+res.data.photo);
             $('#edit-modal-student-id_number').val(res.data.id_number);
             $('#edit-modal-student-first_name').val(res.data.first_name);
@@ -56,6 +57,7 @@ $(function(){
             $('#edit-modal-student-parents_contact_number').val(res.data.parents_contact_number);
         });
    });
+   //show image after inputs
    $('#edit-modal-student-photo').on('change',function(){
     var input = this;
     var url = $(this).val();
@@ -71,7 +73,26 @@ $(function(){
     }
   });
 
+  //delete student
+  $('.btn-delete-student').on('click',function(){
+      let id = $(this).attr('data-id');
+      if(confirm('are you sure you want to delete this student?')){
+            $('#loading').addClass('custom-modal');
+            axios.post('/delete_student',{delete_id:id}).then(res=>{
+                setTimeout(()=>{ window.location.reload()},1500);
+            });
+      }
+
+  });
+
+
+  $('#editStudentModal').modal({
+    show:false,
+    backdrop: 'static',
+    keyboard: false
+    });
 });
+
 
 //axios
 

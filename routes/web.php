@@ -39,5 +39,6 @@ Route::get('/check_year_course_connection/{id}',[AdminController::class,'check_c
 Route::get('/get_course_key/{id}',[AdminController::class,'get_course_key'])->middleware('checkuser');
 Route::post('/save_student',[AdminController::class,'save_student'])->middleware('checkuser')->name('save_new_student');
 Route::get('/edit_student/{id}',[AdminController::class,'edit_student'])->middleware('checkuser');
-Route::post('/save_edit_student',[AdminController::class,'save_edit_student'])->middleware('checkuser');
+Route::post('/save_edit_student',[AdminController::class,'save_edit_student'])->middleware('checkuser')->name('save_edit_student');
+Route::post('/delete_student',[AdminController::class,'delete_student'])->middleware('checkuser');
 
