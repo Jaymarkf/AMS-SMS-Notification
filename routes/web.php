@@ -20,11 +20,15 @@ Route::view('login','login');
 
 Route::post('loginuser',[AdminController::class,'auth'])
 ->name('auth');
-
+//route navigation to sidebar
 Route::view('admin/dashboard','admin.dashboard')->middleware('checkuser');
-
 Route::get('admin/student',[AdminController::class,'student'])->middleware('checkuser');
 Route::get('admin/settings',[AdminController::class,'settings'])->middleware('checkuser');
+Route::get('admin/sms',[AdminController::class,'sms'])->middleware('checkuser');
+
+
+
+
 Route::post('/store_year',[AdminController::class,'store_yearlevel'])->middleware('checkuser');
 Route::post('/create_course',[AdminController::class,'create_course'])->middleware('checkuser');
 //paginateyear

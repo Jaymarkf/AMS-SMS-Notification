@@ -6,6 +6,7 @@ import Idnumber from './components/admin/Students.vue';
 import settingsyear from './components/admin/Settings.vue';
 import modalstudent from './components/admin/Modals.vue';
 import yearcourse from './components/admin/StudentYearCourse.vue';
+import sms from './components/admin/Sms.vue';
 // window.Vue = require('vue');
 // Vue.component('Idnumber',require('./components/admin/Students.vue'));
 // Vue.component('settingsyear',require('./components/admin/Settings.vue'));
@@ -13,7 +14,7 @@ import yearcourse from './components/admin/StudentYearCourse.vue';
 
 const app = new Vue({
 el: '#app',
-components: {Idnumber,settingsyear,modalstudent,yearcourse}
+components: {Idnumber,settingsyear,modalstudent,yearcourse,sms}
 });
 
 //jquery
@@ -84,6 +85,8 @@ $(function(){
       }
 
   });
+
+  //toggle sms
 
 
   $('#editStudentModal').modal({

@@ -18,6 +18,8 @@
 <body>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 <div id="app">
     <div class="content">
         @include('admin/header')
@@ -31,7 +33,8 @@
                             
                                 <settingsyear :year_data="{{ $year_level }}">
                                 </settingsyear>
-                              
+                            @elseif(Request::is('admin/sms'))
+                                @include('admin/sms')
                             @endif 
     </div>
  

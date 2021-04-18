@@ -20,3 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::get('/asd/{data}',[AdminController::class,'api_student']);
+Route::get('/get_credit_balance',[AdminController::class,'credit_balance']);

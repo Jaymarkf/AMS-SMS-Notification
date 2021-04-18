@@ -54,12 +54,20 @@ class AdminController extends Controller
      return view('admin/dashboard',compact('year','users'));
     }
     }
+
+
+    function sms(){
+        return view('admin/dashboard');
+    }
      
     function settings(){
         // $users = User::paginate(1);
     $year_level = YearLevel::all();
      return view('admin/dashboard',compact('year_level'));
     }
+
+
+
 
     //paginate yearlevel
     function yearpaginate(){
@@ -190,6 +198,16 @@ class AdminController extends Controller
     }
     function delete_student(Request $request){
             Student::where('id','=',$request->delete_id)->delete();
+    }
+    function credit_balance(){
+        $url = 'https://ghbulksms.com/index.php?option=com_spc&comm=spc_api&username=buddyk2013&password=uttoG123&balance=true';
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        $result= curl_exec($curl);
+        return response()->json($result);
+        curl_close($curl);
     }
   
 }
