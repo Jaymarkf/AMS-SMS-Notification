@@ -45,4 +45,4 @@ Route::post('/save_student',[AdminController::class,'save_student'])->middleware
 Route::get('/edit_student/{id}',[AdminController::class,'edit_student'])->middleware('checkuser');
 Route::post('/save_edit_student',[AdminController::class,'save_edit_student'])->middleware('checkuser')->name('save_edit_student');
 Route::post('/delete_student',[AdminController::class,'delete_student'])->middleware('checkuser');
-
+Route::post('/send_sms',[AdminController::class,'send_sms'])->middleware('checkuser');

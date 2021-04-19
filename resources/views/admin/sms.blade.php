@@ -4,7 +4,7 @@
               
                 
         <!-- VUE JS SMS TEMPLATE -->
-        <sms></sms>
+        <sms :year="{{$year}}"></sms>
 
         </div>
     </div>

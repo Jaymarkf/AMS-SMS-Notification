@@ -20,25 +20,14 @@
     <div class="row">
         <div class="col mx-5">
             <div class="container-fluid mx-5">
-                <form class=" px-5">
-                    <input type="checkbox" data-toggle="toggle" :checked="showChkState()" data-on="Send to all" data-off="Off" data-onstyle="success" data-offstyle="danger">
+                <form class="px-5" @submit.prevent="Send_SMS()" id="form_send_sms">
+                    <input type="checkbox" data-toggle="toggle"  data-on="Send to all" data-off="Off" data-onstyle="success" data-offstyle="danger">
                     <small class="form-text text-muted">Toggle to send to all student / Off to send to only specific year levels and course / strand</small>
                     <hr>
-                    <div class="form-group">
-                        <label for="year">Year Level</label>
-                        <select class="form-control" id="year" required>
-                            <option value="">Select Course / Strand ...</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="course">Course / Strand</label>
-                        <select class="form-control" id="course" required>
-                            <option value="">Select Course / Strand ...</option>
-                        </select>
-                    </div>
+                    <yearcourse v-bind:year="year"></yearcourse>
                      <div class="form-group">
                         <label for="message">Your Message</label>
-                        <textarea class="form-control"  id="message" rows="3"  maxlength="160" required></textarea>
+                        <textarea class="form-control"  id="message" rows="3"  name="post_sms_message" maxlength="160" required></textarea>
                         <small id="alert_max_message" class="form-text text-muted text-danger">Maximum characters limit is 160</small>
                     </div>
                     <div class="text-left">
@@ -56,23 +45,28 @@
 
 </template>
 <script>
+import yearcourse from './StudentYearCourse.vue';
 export default {
-
+    components:{yearcourse},
+    props:['year'],
     data() {
       return {
           course: '',
           sms_toggle:'',
       }
     },methods:{
-      showChkState(){
-         console.log('aaa');
-      },
+            Send_SMS(){
+                var data = $('#form_send_sms').serialize();
+                axios.post('/send_sms',data).then(res=>{
+                    console.log(res);
+                });
+            }   
     },mounted:
     function (){          
             axios.get('/api/get_credit_balance').then(res=>{
                 $('#credit-wrapper').html(res.data)
             });  
-      
+
     },
    
     

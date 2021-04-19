@@ -56,8 +56,10 @@ class AdminController extends Controller
     }
 
 
+
     function sms(){
-        return view('admin/dashboard');
+        $year = YearLevel::all();
+          return view('admin/dashboard',compact('year'));
     }
      
     function settings(){
@@ -208,6 +210,55 @@ class AdminController extends Controller
         $result= curl_exec($curl);
         return response()->json($result);
         curl_close($curl);
+    }
+    function send_sms(Request $request){
+        $msg = $request->post_sms_message;
+        $recipient = '';
+        // '23354xxxxxxx,233230000000&message=testing';
+
+        if(isset($request->year)){
+            //send to specific
+            $student = Student::where('year_level','=',$request->year)->where('course_strand','=',$request->course)->get();
+           $data = array();
+            foreach ($student as $key => $val){
+                $data[] = $val['parents_contact_number'];
+            }
+            $recipient = implode(',',$data);
+            $msgtoSent = preg_replace('/\s+/', '+', $msg);
+            $url = 'https://ghbulksms.com/index.php?option=com_spc&comm=spc_api&username=buddyk2013&password=uttoG123&sender=Vroomllc&recipient='.$recipient.'&message='.$msgtoSent;
+            // return $url;
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_HEADER, false);
+            $result= curl_exec($curl);
+            $res = substr($result, 0, 2); 
+            return response()->json($res); //either OK or error
+            curl_close($curl);
+
+        }else{
+            //all
+          $student = Student::all();
+          $num = array();
+           foreach($student as $key => $val){
+                $num[] = $val['parents_contact_number'];
+           }
+           $contact = implode(',',$num);
+           $msgtoSent = preg_replace('/\s+/', '+', $msg);
+           $url = 'https://ghbulksms.com/index.php?option=com_spc&comm=spc_api&username=buddyk2013&password=uttoG123&sender=Vroomllc&recipient='.$contact.'&message='.$msgtoSent;
+           $curl = curl_init();
+           curl_setopt($curl, CURLOPT_URL, $url);
+           curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+           curl_setopt($curl, CURLOPT_HEADER, false);
+           $result= curl_exec($curl);
+        //    $res = substr($result, 0, 2); 
+           return response()->json( $result); //either OK or error
+           curl_close($curl);
+
+
+
+        }
+
     }
   
 }

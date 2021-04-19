@@ -86,6 +86,22 @@ $(function(){
 
   });
 
+
+    $('label.btn.btn-danger').on('click',function(){
+        //on activated
+        $('#Yearlevel').val('');
+        $('#course-strand').val('');
+        $('#Yearlevel').attr('disabled','disabled');
+        $('#course-strand').attr('disabled','disabled');
+        
+    });
+    $('label.btn.btn-success').on('click',function(){
+        //off activated
+        $('#Yearlevel').removeAttr('disabled');
+        $('#course-strand').removeAttr('disabled');
+
+    });
+
   //toggle sms
 
 
