@@ -179,6 +179,7 @@ class AdminController extends Controller
         $r->photo->move(public_path('images'),$url_photo);  
         $student->save();
         //redirect to view
+        return redirect('admin/student');
         
     }
     function edit_student($id){ 
