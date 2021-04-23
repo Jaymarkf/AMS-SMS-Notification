@@ -6,7 +6,7 @@
            <a href="{{ url('admin/dashboard')}}" class="nav-brand text-white font-weight-bolder">VROOM</a>
         </div>
         <div class="p-2 ml-3 mr-auto" id="logout">
-            <a href="#" class="pl-1 text-white"><span class="fa fa-power-off fa-lg text-white"></span> logout</a>
+            <a href="{{url('logout')}}" class="pl-1 text-white"><span class="fa fa-power-off fa-lg text-white"></span> logout</a>
         </div>
         <div class="">
             <img src="{{ url('/images/vroom.jpeg') }}" width="60" />

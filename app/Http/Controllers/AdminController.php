@@ -31,7 +31,10 @@ class AdminController extends Controller
 
         return redirect('admin/dashboard');
     }
-
+    function logout(){
+      session()->pull('login');
+      return redirect('/login');
+    }
    
     function student(){
     // $users = User::paginate(1);
@@ -175,7 +178,7 @@ class AdminController extends Controller
         $student->gender = $r->gender;
         $student->year_level = $r->year;
         $student->course_strand = $r->course;
-        $student->photo = $url_photo; 
+        $student->photo = $url_photo;  
         $r->photo->move(public_path('images'),$url_photo);  
         $student->save();
         //redirect to view
